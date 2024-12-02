@@ -8,7 +8,7 @@ import {
 import { Circomkit } from 'circomkit';
 import { Ticket } from './types';
 import { processAadhaarArgs } from '@anon-aadhaar/react';
-import { decodeQRCodeFromFile, encodePeriod, extractDateAndTimeComponents, stringToBytes } from './utils';
+import { decodeQRCodeFromFile, encodePeriod, extractDateAndTimeComponents, getCurrentDateTimeInIST, stringToBytes } from './utils';
 
 export const NullifierSeed = 24567876542;
 
@@ -21,6 +21,7 @@ export class ZKBouncer {
   event: string;
   date: string;
   time: string;
+  place: string;
 
   /**
    * Constructs an instance of ZKBouncer with event and organizer details.
@@ -29,11 +30,12 @@ export class ZKBouncer {
    * @param date - The date of the event (YYYY-MM-DD format).
    * @param time - The time of the event (HH:MM AM/PM format).
    */
-  constructor(name: string, event: string, date: string, time: string) {
+  constructor(name: string, event: string, date: string, time: string, place: string) {
       this.name = name;
       this.event = event;
       this.date = date;
       this.time = time;
+      this.place = place;
   }
 
   /**
@@ -52,7 +54,7 @@ export class ZKBouncer {
    * @param anonAadhaarPCD - The proof generated from Aadhaar data.
    * @param useTestAadhaar - Whether to use test Aadhaar data for verification (default: false).
    * @returns A promise that resolves to true if verification succeeds, or false otherwise.
-   */
+   */ 
   async verifyAadhaar(
       anonAadhaarPCD: AnonAadhaarCore,
       useTestAadhaar: boolean = false
@@ -65,6 +67,32 @@ export class ZKBouncer {
       }
   }
 
+    /**
+     * generates a ticket (without proofs)
+     * @param eventDetails - Details of the event
+     * @param organizerDetails - Details of the organizer
+     * @returns Ticket - Generated ticket object
+     */
+    generateTicket(): Ticket {
+        const ticketId = `TICKET-${Date.now()}-${Math.floor(Math.random() * 10000)}`; // Unique ticket ID
+        const issuedAt = getCurrentDateTimeInIST();
+        const eventDetails = { name: this.event, date: this.date, time: this.time, place: this.place };
+        const organizerDetails =  { name: this.name }
+
+        // Create the ticket object
+        const ticket: Ticket = {
+        ticketId,
+        aadhaarProof: null,
+        ticketproof: null,
+        eventDetails,
+        organizerDetails,
+        issuedAt: `${issuedAt.time}, ${issuedAt.date}`,
+        isVerified: false,
+        };
+
+        return ticket;
+    }
+  
   /**
    * Processes a ticket by generating and verifying its proof.
    * @param qr_code_path - The file path of the Aadhaar QR code image.

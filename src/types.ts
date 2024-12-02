@@ -7,12 +7,12 @@ export interface EventDetails {
     maxTickets: number;
   }
   
-  export interface OrganizerConfig {
+export interface OrganizerConfig {
     name: string;
     seed: string;
   }
   
-  export interface TicketVerificationResult {
+export interface TicketVerificationResult {
     isValid: boolean;
     reason?: string;
   }
@@ -20,7 +20,7 @@ export interface EventDetails {
 // Define the structure of the ticket
 export interface Ticket {
   ticketId: string;           // Unique identifier for the ticket
-  aadhaarProof: AnonAadhaarCore;  // Aadhaar proof (e.g., from the proof generation process)
+  aadhaarProof: AnonAadhaarCore | null;  // Aadhaar proof (e.g., from the proof generation process)
   ticketproof: string | null;
   eventDetails: {
     name: string;
@@ -30,7 +30,6 @@ export interface Ticket {
   };  // Event details such as name, time, and place
   organizerDetails: {
     name: string;              // Name of the organizer
-    contactInfo: string;       // Contact information (email/phone)
   };
   issuedAt: string;           // Timestamp of when the ticket was issued
   isVerified: boolean;        // Whether the ticket has been verified
@@ -117,7 +116,6 @@ export const sampleTicket: Ticket = {
   },
   organizerDetails: {
     name: "John Doe",
-    contactInfo: "contact@organizer.com"
   },
   issuedAt: "12:42PM,2024-11-22",
   isVerified: true

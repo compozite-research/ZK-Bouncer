@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs", 
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ES2022", 
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -9,7 +10,9 @@
     "outDir": "./dist", // Specifies where compiled files go
     "rootDir": "./src", // Tells TypeScript where source files are
     "noEmit": false,    // Allow emit of .js files
+    "jsx": "react-jsx",
+    
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
