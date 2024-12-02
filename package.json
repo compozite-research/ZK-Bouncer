@@ -1,11 +1,12 @@
 {
   "name": "zk-bouncer",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "git@github.com:compozite-research/ZK-Bouncer.git",
   "author": "RajeshRk18 <kannar432@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@anon-aadhaar/core": "^2.4.0",
     "@anon-aadhaar/react": "^2.4.0",

@@ -11,7 +11,9 @@
     "rootDir": "./src", // Tells TypeScript where source files are
     "noEmit": false,    // Allow emit of .js files
     "jsx": "react-jsx",
-    
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
