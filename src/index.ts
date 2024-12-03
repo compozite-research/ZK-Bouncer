@@ -1,5 +1,5 @@
-export * from './zkbouncer';
-export * from './types';
+export * from './zkbouncer'
+export * from './types'
 
 import { ZKBouncer } from './zkbouncer';
 import { log } from 'console';
